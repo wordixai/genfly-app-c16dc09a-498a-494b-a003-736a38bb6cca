@@ -1,18 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Fredoka+One:wght@400&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-   
-  }
-
-  .dark {
-
+    /* Pop Art Color Palette */
+    --pop-orange: 25 100% 55%;
+    --pop-pink: 330 100% 70%;
+    --pop-yellow: 45 100% 60%;
+    --pop-blue: 200 100% 60%;
+    --pop-purple: 280 100% 70%;
+    --pop-green: 120 100% 50%;
+    
+    /* Background Colors */
+    --background: 25 100% 55%;
+    --foreground: 0 0% 10%;
+    
+    /* UI Colors */
+    --primary: 330 100% 70%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 45 100% 60%;
+    --secondary-foreground: 0 0% 10%;
+    --accent: 200 100% 60%;
+    --accent-foreground: 0 0% 100%;
+    
+    /* Card and Surface Colors */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+    
+    /* Border and Input */
+    --border: 0 0% 20%;
+    --input: 0 0% 90%;
+    --ring: 330 100% 70%;
+    
+    /* Muted Colors */
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 40%;
+    
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --radius: 1rem;
   }
 }
 
@@ -22,6 +54,173 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-pop-orange text-foreground font-comic;
+    background-image: 
+      radial-gradient(circle at 25% 25%, hsl(var(--pop-pink)) 2px, transparent 2px),
+      radial-gradient(circle at 75% 75%, hsl(var(--pop-yellow)) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, hsl(var(--pop-blue)) 1.5px, transparent 1.5px);
+    background-size: 50px 50px, 30px 30px, 40px 40px;
+    background-position: 0 0, 15px 15px, 25px 25px;
+  }
+}
+
+@layer components {
+  .pop-frame {
+    @apply relative p-6 bg-white border-4 border-black;
+    box-shadow: 8px 8px 0px hsl(var(--pop-pink)), 
+                16px 16px 0px hsl(var(--pop-yellow));
+    transform: rotate(-2deg);
+  }
+  
+  .pop-frame:nth-child(even) {
+    transform: rotate(2deg);
+    box-shadow: -8px 8px 0px hsl(var(--pop-blue)), 
+                -16px 16px 0px hsl(var(--pop-green));
+  }
+  
+  .comic-bubble {
+    @apply relative bg-white p-4 rounded-3xl border-3 border-black;
+    box-shadow: 4px 4px 0px hsl(var(--pop-pink));
+  }
+  
+  .comic-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 30px;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid white;
+    border-top-color: white;
+    z-index: 2;
+  }
+  
+  .comic-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -18px;
+    left: 27px;
+    width: 0;
+    height: 0;
+    border-left: 18px solid transparent;
+    border-right: 18px solid transparent;
+    border-top: 18px solid black;
+    z-index: 1;
+  }
+  
+  .halftone-bg {
+    background-image: 
+      radial-gradient(circle, hsl(var(--pop-pink)) 2px, transparent 2px);
+    background-size: 20px 20px;
+  }
+  
+  .bounce-btn {
+    animation: bounce-fun 2s infinite;
+    transform-origin: center bottom;
+  }
+  
+  @keyframes bounce-fun {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0) rotate(-2deg);
+    }
+    40% {
+      transform: translateY(-15px) rotate(2deg);
+    }
+    60% {
+      transform: translateY(-7px) rotate(-1deg);
+    }
+  }
+  
+  .wiggle {
+    animation: wiggle 3s ease-in-out infinite;
+  }
+  
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-2deg); }
+    25% { transform: rotate(2deg); }
+    50% { transform: rotate(-1deg); }
+    75% { transform: rotate(1deg); }
+  }
+  
+  .pop-text-shadow {
+    text-shadow: 3px 3px 0px hsl(var(--pop-pink)),
+                 6px 6px 0px hsl(var(--pop-yellow));
+  }
+  
+  .price-sticker {
+    @apply bg-pop-yellow text-black font-bold px-3 py-1 rotate-12 border-3 border-black;
+    box-shadow: 3px 3px 0px hsl(var(--pop-pink));
+  }
+}
+
+@layer utilities {
+  .font-comic {
+    font-family: 'Kalam', cursive;
+  }
+  
+  .font-display {
+    font-family: 'Fredoka One', cursive;
+  }
+  
+  .bg-pop-orange {
+    background-color: hsl(var(--pop-orange));
+  }
+  
+  .bg-pop-pink {
+    background-color: hsl(var(--pop-pink));
+  }
+  
+  .bg-pop-yellow {
+    background-color: hsl(var(--pop-yellow));
+  }
+  
+  .bg-pop-blue {
+    background-color: hsl(var(--pop-blue));
+  }
+  
+  .bg-pop-purple {
+    background-color: hsl(var(--pop-purple));
+  }
+  
+  .bg-pop-green {
+    background-color: hsl(var(--pop-green));
+  }
+  
+  .text-pop-orange {
+    color: hsl(var(--pop-orange));
+  }
+  
+  .text-pop-pink {
+    color: hsl(var(--pop-pink));
+  }
+  
+  .text-pop-yellow {
+    color: hsl(var(--pop-yellow));
+  }
+  
+  .text-pop-blue {
+    color: hsl(var(--pop-blue));
+  }
+  
+  .text-pop-purple {
+    color: hsl(var(--pop-purple));
+  }
+  
+  .text-pop-green {
+    color: hsl(var(--pop-green));
+  }
+  
+  .border-3 {
+    border-width: 3px;
+  }
+  
+  .border-4 {
+    border-width: 4px;
+  }
+  
+  .border-5 {
+    border-width: 5px;
   }
 }
